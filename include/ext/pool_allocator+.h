@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <new>
+#include <ext/concurrence.h>
 
 namespace mycxx
 {
@@ -14,7 +15,7 @@ namespace mycxx
     protected:
         enum { ALIGN = 8 };
         enum { MAX_BYTES = 128 };
-        enum { FREE_LIST_SIZE = size_t(_MAX_BYTES) / size_t(_ALIGN) };
+        enum { FREE_LIST_SIZE = size_t(MAX_BYTES) / size_t(ALIGN) };
         union obj {
             union obj *link;
             char data[1];
@@ -27,12 +28,25 @@ namespace mycxx
         size_t round_up(size_t bytes)
         {
         }
-
+        
         obj *volatile* get_free_list(size_t bytes) throw()
         {
         }
-        
+
+        __gnu_cxx::__mutex &get_mutex() throw ()
+        {
+        }
+
+        void refill(size_t n)
+        {
+        }
+
+        char *allocate_chunk(size_t n, int &nobjs)
+        {
+        }
     };
+
+    
 }
 
 #endif
