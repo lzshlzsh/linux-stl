@@ -27,3 +27,4 @@ clean:
 	$(CXX) ${CXXFLAGS} -o $@ $^ ${LDFLAGS}
 % : %.c
 	$(CC) ${CFLAGS} -o $@ $^ ${LDFLAGS}
+

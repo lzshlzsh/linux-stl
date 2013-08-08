@@ -15,7 +15,7 @@ namespace mycxx
     protected:
         enum { ALIGN = 8 };
         enum { MAX_BYTES = 128 };
-        enum { FREE_LIST_SIZE = size_t(MAX_BYTES) / size_t(ALIGN) };
+        enum { FREE_LIST_SIZE = (size_t)MAX_BYTES / (size_t)ALIGN };
         union obj {
             union obj *link;
             char data[1];
@@ -27,25 +27,14 @@ namespace mycxx
 
         size_t round_up(size_t bytes)
         {
+            return (bytes + (size_t)ALIGN - 1) & ~((size_t)ALIGN - 1);
         }
         
-        obj *volatile* get_free_list(size_t bytes) throw()
-        {
-        }
-
-        __gnu_cxx::__mutex &get_mutex() throw ()
-        {
-        }
-
-        void refill(size_t n)
-        {
-        }
-
-        char *allocate_chunk(size_t n, int &nobjs)
-        {
-        }
+        obj *volatile* get_free_list(size_t bytes) throw();
+        __gnu_cxx::__mutex &get_mutex() throw ();
+        void refill(size_t n);
+        char *allocate_chunk(size_t n, int &nobjs);
     };
-
     
 }
 
