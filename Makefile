@@ -1,7 +1,7 @@
 
 export stl_root := $(PWD)
 
-.PHONY: all clean test test_clean stl_clean
+.PHONY: all clean test test_clean stl stl_clean
 
 all: stl test
 
