@@ -32,7 +32,7 @@ namespace mycxx
         
         obj *volatile* get_free_list(size_t bytes) throw();
         __gnu_cxx::__mutex &get_mutex() throw ();
-        void refill(size_t n);
+        void *refill(size_t n);
         char *allocate_chunk(size_t n, int &nobjs);
     };
     
