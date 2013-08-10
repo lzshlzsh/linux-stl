@@ -1,5 +1,7 @@
 
 export stl_root := $(PWD)
+export CXX := g++
+export CXXFLAGS := -g -Wall -Werror
 
 .PHONY: all clean test test_clean stl stl_clean
 

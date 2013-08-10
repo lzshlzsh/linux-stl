@@ -10,39 +10,35 @@ __mkdir := $(shell for i in $(dep_dir) $(obj_dir); do \
 	done \
 	)
 
-CXX := g++
-CFLAGS := -Wall -g 
 LDFLAGS := #-ldl -lpthread #-static
 
-CFLAGS += $(addprefix -I,$(inc_path))
-CFLAGS += $(addprefix -L,$(stl_path))
+CXXFLAGS += $(addprefix -I,$(inc_path))
+CXXFLAGS += $(addprefix -L,$(stl_path))
 LDFLAGS += -lstl
-
-CXXFLAGS := ${CFLAGS}
 
 files := $(wildcard *.cpp)
 target_obj := $(patsubst %.cpp,%.o,${files})
 targerts := $(patsubst %.o,%,${target_obj})
 
-ifneq "$(MAKECMDGOALS)" "clean"
-    -include $(addprefix $(dep_dir)/,$(patsubst %.cpp,%.d,$(files)))
-endif
-
 .PHONY: all clean
 
 all: ${targerts}
 
-$(targerts): $(target_obj) 
+$(targerts): $(target_obj) libstl.so
 
 clean:
 	${RM} -r ${targerts} $(obj_dir) $(dep_dir)
 
 %: %.o
-	$(CXX) ${CXXFLAGS} -o $@ $(addprefix $(obj_dir)/,$(notdir $^)) ${LDFLAGS}
+	$(CXX) ${CXXFLAGS} -o $@ $(addprefix $(obj_dir)/,$(notdir $<)) ${LDFLAGS}
 
 %.o: %.cpp
 	@$(call make-depend,$<,$(patsubst %.cpp,%.d,$<))
 	$(CXX) ${CXXFLAGS} -c -o $(addprefix $(obj_dir)/,$(notdir $@)) $<
+
+ifneq "$(MAKECMDGOALS)" "clean"
+    -include $(addprefix $(dep_dir)/,$(patsubst %.cpp,%.d,$(files)))
+endif
 
 define make-depend
     $(CXX) $(CXXFLAGS) -M $1 >$(dep_dir)/$2
@@ -51,5 +47,5 @@ endef
 vpath %.h $(inc_dir)
 vpath %.d $(dep_dir)
 vpath %.o $(obj_dir)
-
+vpath %.so $(stl_path)
 

@@ -16,13 +16,8 @@ __mkdir := $(shell \
 	done \
 	)
 
-CXX := g++
-CXXFLAGS := -g -fPIC
+CXXFLAGS += -fPIC
 CXXFLAGS += $(addprefix -I,$(inc_dir))
-
-ifneq "$(MAKECMDGOALS)" "clean"
-	-include $(addprefix $(dep_dir)/,$(patsubst %.o,%.d,$(target_obj)))
-endif
 
 .PHONY: all clean
 
@@ -37,6 +32,10 @@ $(target_lib): $(target_obj)
 
 clean:
 	$(RM) -r $(dep_dir) $(obj_dir) 
+
+ifneq "$(MAKECMDGOALS)" "clean"
+	-include $(addprefix $(dep_dir)/,$(patsubst %.o,%.d,$(target_obj)))
+endif
 
 define make-depend
     $(CXX) $(CXXFLAGS) -M $1 >$(dep_dir)/$2
