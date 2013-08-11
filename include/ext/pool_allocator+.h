@@ -64,11 +64,11 @@ namespace mycxx
 
         pointer address(reference r) const throw()
         {
-            return std::addressof(r);
+            return mystd::addressof(r);
         }
         const_pointer address(const_reference cr) const throw()
         {
-            return std::addressof(cr);
+            return mystd::addressof(cr);
         }
         size_type max_size() const throw()
         {
@@ -136,6 +136,17 @@ namespace mycxx
                 *list = q;
             }
         }
+    }
+
+    template <typename T>
+    inline bool operator ==(const pool_alloc<T> &a, const pool_alloc<T> &b)
+    {
+        return true;
+    }
+    template <typename T>
+    inline bool operator !=(const pool_alloc<T> &a, const pool_alloc<T> &b)
+    {
+        return false;
     }
 }
 
