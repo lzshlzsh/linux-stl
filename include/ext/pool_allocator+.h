@@ -67,7 +67,7 @@ namespace mycxx
             return std::addressof(r);
         }
         const_pointer address(const_reference cr) const throw()
-        {
+        {
             return std::addressof(cr);
         }
         size_type max_size() const throw()
