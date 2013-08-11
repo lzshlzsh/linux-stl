@@ -1,6 +1,6 @@
-#include "ext/pool_allocator+.h"
-
 #include <new>
+
+#include "ext/pool_allocator+.h"
 
 namespace 
 {
