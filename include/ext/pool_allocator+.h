@@ -79,7 +79,7 @@ namespace mycxx
             ::new (reinterpret_cast<void *>(p)) T(r);
         }
 
-        void destory(pointer p)
+        void destroy(pointer p)
         {
             p->~T();
         }
@@ -105,7 +105,7 @@ namespace mycxx
 
                 __gnu_cxx::__scoped_lock lock(get_mutex());
                 obj *result = *list;
-                if (__builtin_expect(result, true)) {
+                if (__builtin_expect(NULL != result, true)) {
                     ret = reinterpret_cast<pointer>(result);
                     *list = result->link;
                 } else {
@@ -123,7 +123,7 @@ namespace mycxx
     template<typename T>
     void pool_alloc<T>::deallocate(pointer p, size_type n)
     {
-        if (__builtin_expect(p && n, true)) {
+        if (__builtin_expect(NULL != p && n, true)) {
             const size_type size = n * sizeof(T);
             if (size > MAX_BYTES) {
                 ::operator delete(p);
