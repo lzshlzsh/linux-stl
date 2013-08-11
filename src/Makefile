@@ -1,6 +1,6 @@
 stl_root ?= ..
 
-inc_dir := $(stl_root)/include
+inc_dir ?= $(stl_root)/include $(stl_root)/include/std
 src_dir := .
 obj_dir := obj
 dep_dir := .dep

@@ -1,7 +1,7 @@
 stl_root ?= ..
 
-inc_path := $(stl_root)/include
-stl_path := $(stl_root)/src/obj
+inc_dir ?= $(stl_root)/include $(stl_root)/include/std 
+stl_dir := $(stl_root)/src/obj
 dep_dir := .dep
 obj_dir := .obj
 
@@ -12,8 +12,8 @@ __mkdir := $(shell for i in $(dep_dir) $(obj_dir); do \
 
 LDFLAGS := #-ldl -lpthread #-static
 
-CXXFLAGS += $(addprefix -I,$(inc_path))
-CXXFLAGS += $(addprefix -L,$(stl_path))
+CXXFLAGS += $(addprefix -I,$(inc_dir))
+CXXFLAGS += $(addprefix -L,$(stl_dir))
 LDFLAGS += -lstl
 
 files := $(wildcard *.cpp)
@@ -47,5 +47,5 @@ endef
 vpath %.h $(inc_dir)
 vpath %.d $(dep_dir)
 vpath %.o $(obj_dir)
-vpath %.so $(stl_path)
+vpath %.so $(stl_dir)
 

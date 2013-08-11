@@ -1,5 +1,7 @@
 
 export stl_root := $(PWD)
+export inc_dir := $(stl_root)/include $(stl_root)/include/std
+
 export CXX := g++
 export CXXFLAGS := -g -Wall -Werror
 
