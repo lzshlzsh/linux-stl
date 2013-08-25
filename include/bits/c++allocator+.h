@@ -3,7 +3,7 @@
 
 #include "ext/pool_allocator+.h"
 
-#define base_allocator mycxx::pool_allocator
+#define base_allocator mycxx::pool_alloc
 
 #endif
 

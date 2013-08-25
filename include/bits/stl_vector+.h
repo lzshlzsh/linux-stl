@@ -55,6 +55,22 @@ namespace mystd
             }
         }
 
+        vector_base(): imp() {}
+        vector_base(const allocator_type &a): imp(a) {}
+        vector_base(size_t n): imp() 
+        {
+            create_storage(n);
+        }
+        vector_base(const allocator_type &a, size_t n): imp(a)
+        {
+            create_storage(n);
+        }
+
+        ~vector_base()
+        {
+            deallocate(imp.start, imp.end_of_storage - imp.start);
+        }
+
     private:
         void create_storage(size_t n)
         {
@@ -62,6 +78,21 @@ namespace mystd
             imp.finish = imp.start;
             imp.end_of_storage = imp.start + n;
         }
+    };
+
+    template <typename T, typename Alloc = mystd::allocator<T> >
+    class vector: protected vector_base<T, Alloc>
+    {
+        typedef vector_base<T, Alloc> base_t;
+        typedef typename base_t::T_alloc_type T_alloc_type;
+        typedef mycxx::alloc_traits<T_alloc_type> alloc_traits;
+    public:
+        typedef T value_type;
+        typedef typename base_t::pointer pointer;
+        typedef typename alloc_traits::const_pointer const_pointer;
+        typedef typename alloc_traits::reference reference;
+        typedef typename alloc_traits::const_reference const_reference;
+        
     };
 }
 
