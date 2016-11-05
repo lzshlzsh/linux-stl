@@ -13,3 +13,11 @@
 *.a
 
 .dep
+
+cscope*.out
+*.swp
+
+testsuite/allocator
+testsuite/test_is_placeholder
+testsuite/test_is_placeholder.cpp
+testsuite/vector
